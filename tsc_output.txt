@@ -1,0 +1,1 @@
+app/games/beer_game/screentest/components/screentest1.tsx(2649,1): error TS1160: Unterminated template literal.

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import svgPaths from "@/lib/svg/svg2";
-import content from "@/app/games/beer_game/content.json";
+import content from "@/app/games/beer_game/intro/content.json";
 
 // --- Types ---
 
