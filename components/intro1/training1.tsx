@@ -1,5 +1,15 @@
 import svgPaths from "@/lib/svg/svg2";
+import Link from "next/link";
 
+interface Content {
+  texts: string[];
+  images: string[];
+  svg_paths?: string[];
+}
+
+interface Props {
+  content: Content;
+}
 function Group() {
   return (
     <div className="relative shrink-0 size-[32px]" data-name="Group">
@@ -22,20 +32,20 @@ function Group() {
   );
 }
 
-function Frame14() {
+function Frame14({ text }: { text: string }) {
   return (
     <div className="content-stretch flex gap-[10px] items-center relative shrink-0">
       <Group />
-      <p className="font-['Outfit:SemiBold',sans-serif] font-semibold leading-[normal] relative shrink-0 text-[#202326] text-[40px] text-nowrap tracking-[-0.4px] whitespace-pre">{`Welcome to the Beer Game `}</p>
+      <p className="font-['Outfit:SemiBold',sans-serif] font-semibold leading-[normal] relative shrink-0 text-[#202326] text-[40px] text-nowrap tracking-[-0.4px] whitespace-pre">{text}</p>
     </div>
   );
 }
 
-function Frame6() {
+function Frame6({ title, description }: { title: string; description: string }) {
   return (
     <div className="content-stretch flex flex-col gap-[10px] items-center justify-center relative shrink-0 w-[659px]">
-      <Frame14 />
-      <p className="font-['Inter:Regular','Noto_Sans:Regular',sans-serif] font-normal leading-[normal] min-w-full not-italic relative shrink-0 text-[#202326] text-[16px] w-[min-content]">{`Experience the complexities of supply chain management in this interactive simulation. `}</p>
+      <Frame14 text={title} />
+      <p className="font-['Inter:Regular','Noto_Sans:Regular',sans-serif] font-normal leading-[normal] min-w-full not-italic relative shrink-0 text-[#202326] text-[16px] w-[min-content]">{description}</p>
     </div>
   );
 }
@@ -165,55 +175,42 @@ function Frame12() {
   return <div className="absolute h-[248px] left-[80px] top-[120px] w-[589px]" />;
 }
 
-function Frame8() {
+function Frame8({ title, description }: { title: string; description: string }) {
   return (
     <div className="content-stretch flex flex-col gap-[16px] items-start justify-center leading-[normal] relative shrink-0 text-[#202326] w-full">
-      <p className="font-['Outfit:SemiBold',sans-serif] font-semibold relative shrink-0 text-[32px] text-nowrap whitespace-pre">A supply chain Simulation Game</p>
-      <p className="font-['Inter:Regular','Noto_Sans:Regular',sans-serif] font-normal not-italic relative shrink-0 text-[16px] w-[566px]">{`This game will teach you key supply-chain concepts, by simulating a Beer distribution network. `}</p>
+      <p className="font-['Outfit:SemiBold',sans-serif] font-semibold relative shrink-0 text-[32px] text-nowrap whitespace-pre">{title}</p>
+      <p className="font-['Inter:Regular','Noto_Sans:Regular',sans-serif] font-normal not-italic relative shrink-0 text-[16px] w-[566px]">{description}</p>
     </div>
   );
 }
 
-function Frame9() {
+function Frame9({ items }: { items: string[] }) {
   return (
     <div className="content-stretch flex flex-col font-normal gap-[16px] items-start justify-center leading-[0] not-italic relative shrink-0 text-[#202326] text-[16px] text-nowrap w-full">
-      <ul className="[white-space-collapse:collapse] block font-['Inter:Regular',sans-serif] relative shrink-0">
-        <li className="ms-[24px]">
-          <span className="leading-[normal]">Manage inventory levels across a multi-tier supply chain</span>
-        </li>
-      </ul>
-      <ul className="[white-space-collapse:collapse] block font-['Inter:Regular','Noto_Sans:Regular',sans-serif] relative shrink-0">
-        <li className="ms-[24px]">
-          <span className="leading-[normal]">{`Balance customer demand with ordering costs `}</span>
-        </li>
-      </ul>
-      <ul className="[white-space-collapse:collapse] block font-['Inter:Regular',sans-serif] relative shrink-0">
-        <li className="ms-[24px]">
-          <span className="leading-[normal]">Minimize total system costs through strategic decisions</span>
-        </li>
-      </ul>
-      <ul className="[white-space-collapse:collapse] block font-['Inter:Regular',sans-serif] relative shrink-0">
-        <li className="ms-[24px]">
-          <span className="leading-[normal]">Learn about the bullwhip effect in real-time</span>
-        </li>
-      </ul>
+      {items.map((item, index) => (
+        <ul key={index} className="[white-space-collapse:collapse] block font-['Inter:Regular',sans-serif] relative shrink-0">
+          <li className="ms-[24px]">
+            <span className="leading-[normal]">{item}</span>
+          </li>
+        </ul>
+      ))}
     </div>
   );
 }
 
-function Frame10() {
+function Frame10({ items }: { items: string[] }) {
   return (
     <div className="content-stretch flex flex-col gap-[20px] items-start justify-center relative shrink-0">
-      <Frame9 />
+      <Frame9 items={items} />
     </div>
   );
 }
 
-function Frame11() {
+function Frame11({ title, description, listItems }: { title: string; description: string; listItems: string[] }) {
   return (
     <div className="content-stretch flex flex-col gap-[40px] items-start justify-center relative shrink-0 w-full">
-      <Frame8 />
-      <Frame10 />
+      <Frame8 title={title} description={description} />
+      <Frame10 items={listItems} />
     </div>
   );
 }
@@ -253,23 +250,29 @@ function Frame() {
   );
 }
 
-function Button() {
+function Button({ text }: { text: string }) {
   return (
-    <div className="bg-white h-[48px] relative rounded-[46px] shrink-0" data-name="Button">
-      <div className="box-border content-stretch flex gap-[8px] h-[48px] items-center overflow-clip pl-[24px] pr-[22px] py-[14px] relative rounded-[inherit]">
-        <p className="font-['Inter:Medium',sans-serif] font-medium leading-[1.5] not-italic relative shrink-0 text-[#1a1a1a] text-[18px] text-nowrap whitespace-pre">Next</p>
-        <Frame />
+    <Link href="/intro2">
+      <div className="bg-white h-[48px] relative rounded-[46px] shrink-0" data-name="Button">
+        <div className="box-border content-stretch flex gap-[8px] h-[48px] items-center overflow-clip pl-[24px] pr-[22px] py-[14px] relative rounded-[inherit]">
+          <p className="font-['Inter:Medium',sans-serif] font-medium leading-[1.5] not-italic relative shrink-0 text-[#1a1a1a] text-[18px] text-nowrap whitespace-pre">{text}</p>
+          <Frame />
+        </div>
+        <div aria-hidden="true" className="absolute border border-[rgba(225,228,235,0.5)] border-solid inset-[-1px] pointer-events-none rounded-[47px]" />
       </div>
-      <div aria-hidden="true" className="absolute border border-[rgba(225,228,235,0.5)] border-solid inset-[-1px] pointer-events-none rounded-[47px]" />
-    </div>
+    </Link>
   );
 }
 
-function Frame20() {
+function Frame20({ content }: { content: Content }) {
   return (
     <div className="content-stretch flex flex-col gap-[48px] items-start relative shrink-0 w-[589px]">
-      <Frame11 />
-      <Button />
+      <Frame11
+        title={content.texts[2]}
+        description={content.texts[3]}
+        listItems={[content.texts[10], content.texts[11], content.texts[12], content.texts[13]]}
+      />
+      <Button text={content.texts[4]} />
     </div>
   );
 }
@@ -304,9 +307,9 @@ function Frame1() {
   );
 }
 
-function Button1() {
+function Button1({ backgroundImage }: { backgroundImage: string }) {
   return (
-    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 146 152\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(0.0000010166 21.714 -20.678 -11.507 73 -57)\\\'><stop stop-color=\\\'rgba(87,87,87,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(62,62,62,1)\\\' offset=\\\'0.5\\\'/><stop stop-color=\\\'rgba(38,38,38,1)\\\' offset=\\\'1\\\'/></radialGradient></defs></svg>')" }}>
+    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: `url('${backgroundImage}')` }}>
       <div className="flex flex-row items-center justify-center overflow-clip rounded-[inherit] size-full">
         <div className="box-border content-stretch flex gap-[8px] h-[152px] items-center justify-center pl-[24px] pr-[20px] py-[14px] relative w-full">
           <Frame1 />
@@ -318,11 +321,11 @@ function Button1() {
   );
 }
 
-function Frame18() {
+function Frame18({ text, backgroundImage }: { text: string; backgroundImage: string }) {
   return (
     <div className="[grid-area:1_/_1] content-stretch flex flex-col gap-[16px] items-center relative self-start shrink-0 w-[146px]">
-      <Button1 />
-      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">Factory</p>
+      <Button1 backgroundImage={backgroundImage} />
+      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">{text}</p>
     </div>
   );
 }
@@ -369,9 +372,9 @@ function Frame2() {
   );
 }
 
-function Button2() {
+function Button2({ backgroundImage }: { backgroundImage: string }) {
   return (
-    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 146 152\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(0.0000010166 21.714 -20.678 -11.507 73 -57)\\\'><stop stop-color=\\\'rgba(87,87,87,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(62,62,62,1)\\\' offset=\\\'0.5\\\'/><stop stop-color=\\\'rgba(38,38,38,1)\\\' offset=\\\'1\\\'/></radialGradient></defs></svg>')" }}>
+    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: `url('${backgroundImage}')` }}>
       <div className="flex flex-row items-center justify-center overflow-clip rounded-[inherit] size-full">
         <div className="box-border content-stretch flex gap-[8px] h-[152px] items-center justify-center pl-[24px] pr-[20px] py-[14px] relative w-full">
           <Frame2 />
@@ -383,11 +386,11 @@ function Button2() {
   );
 }
 
-function Frame17() {
+function Frame17({ text, backgroundImage }: { text: string; backgroundImage: string }) {
   return (
     <div className="[grid-area:1_/_2] content-stretch flex flex-col gap-[16px] items-center relative self-start shrink-0 w-[146px]">
-      <Button2 />
-      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">Distributor</p>
+      <Button2 backgroundImage={backgroundImage} />
+      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">{text}</p>
     </div>
   );
 }
@@ -422,9 +425,9 @@ function Frame3() {
   );
 }
 
-function Button3() {
+function Button3({ backgroundImage }: { backgroundImage: string }) {
   return (
-    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 146 152\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(0.0000010166 21.714 -20.678 -11.507 73 -57)\\\'><stop stop-color=\\\'rgba(87,87,87,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(62,62,62,1)\\\' offset=\\\'0.5\\\'/><stop stop-color=\\\'rgba(38,38,38,1)\\\' offset=\\\'1\\\'/></radialGradient></defs></svg>')" }}>
+    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: `url('${backgroundImage}')` }}>
       <div className="flex flex-row items-center justify-center overflow-clip rounded-[inherit] size-full">
         <div className="box-border content-stretch flex gap-[8px] h-[152px] items-center justify-center pl-[24px] pr-[20px] py-[14px] relative w-full">
           <Frame3 />
@@ -436,11 +439,11 @@ function Button3() {
   );
 }
 
-function Frame16() {
+function Frame16({ text, backgroundImage }: { text: string; backgroundImage: string }) {
   return (
     <div className="[grid-area:2_/_1] content-stretch flex flex-col gap-[16px] items-center relative self-start shrink-0 w-[146px]">
-      <Button3 />
-      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">Retailer</p>
+      <Button3 backgroundImage={backgroundImage} />
+      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">{text}</p>
     </div>
   );
 }
@@ -491,9 +494,9 @@ function Frame4() {
   );
 }
 
-function Button4() {
+function Button4({ backgroundImage }: { backgroundImage: string }) {
   return (
-    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 146 152\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(0.0000010166 21.714 -20.678 -11.507 73 -57)\\\'><stop stop-color=\\\'rgba(87,87,87,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(62,62,62,1)\\\' offset=\\\'0.5\\\'/><stop stop-color=\\\'rgba(38,38,38,1)\\\' offset=\\\'1\\\'/></radialGradient></defs></svg>')" }}>
+    <div className="h-[152px] relative rounded-[24px] shrink-0 w-full" data-name="Button" style={{ backgroundImage: `url('${backgroundImage}')` }}>
       <div className="flex flex-row items-center justify-center overflow-clip rounded-[inherit] size-full">
         <div className="box-border content-stretch flex gap-[8px] h-[152px] items-center justify-center pl-[24px] pr-[20px] py-[14px] relative w-full">
           <Frame4 />
@@ -505,36 +508,36 @@ function Button4() {
   );
 }
 
-function Frame15() {
+function Frame15({ text, backgroundImage }: { text: string; backgroundImage: string }) {
   return (
     <div className="[grid-area:2_/_2] content-stretch flex flex-col gap-[16px] items-center relative self-start shrink-0 w-[146px]">
-      <Button4 />
-      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">Wholesaler</p>
+      <Button4 backgroundImage={backgroundImage} />
+      <p className="font-['Outfit:Bold',sans-serif] font-bold leading-[normal] relative shrink-0 text-[#202326] text-[18px] text-center tracking-[-0.18px] w-full">{text}</p>
     </div>
   );
 }
 
-function Frame19() {
+function Frame19({ content }: { content: Content }) {
   return (
     <div className="gap-[64px] grid grid-cols-[repeat(2,_minmax(0px,_1fr))] grid-rows-[repeat(2,_minmax(0px,_1fr))] h-[437px] relative shrink-0 w-[376px]">
-      <Frame18 />
-      <Frame17 />
-      <Frame16 />
-      <Frame15 />
+      <Frame18 text={content.texts[5]} backgroundImage={content.images[0]} />
+      <Frame17 text={content.texts[6]} backgroundImage={content.images[1]} />
+      <Frame16 text={content.texts[7]} backgroundImage={content.images[2]} />
+      <Frame15 text={content.texts[8]} backgroundImage={content.images[3]} />
     </div>
   );
 }
 
-function Frame21() {
+function Frame21({ content }: { content: Content }) {
   return (
     <div className="absolute content-stretch flex gap-[122px] items-center left-[90px] top-[74px]">
-      <Frame20 />
-      <Frame19 />
+      <Frame20 content={content} />
+      <Frame19 content={content} />
     </div>
   );
 }
 
-function BackgroundBorderShadow() {
+function BackgroundBorderShadow({ content }: { content: Content }) {
   return (
     <div className="bg-[rgba(255,255,255,0.6)] h-[585px] relative rounded-[16px] shrink-0 w-full" data-name="Background+Border+Shadow">
       <div className="h-[585px] overflow-clip relative rounded-[inherit] w-full">
@@ -542,18 +545,18 @@ function BackgroundBorderShadow() {
         <Group4 />
         <Group6 />
         <Frame12 />
-        <Frame21 />
+        <Frame21 content={content} />
       </div>
       <div aria-hidden="true" className="absolute border-[1.416px] border-solid border-white inset-0 pointer-events-none rounded-[16px] shadow-[0px_2.509px_10.035px_0px_rgba(255,255,255,0)]" />
     </div>
   );
 }
 
-function Frame7() {
+function Frame7({ content }: { content: Content }) {
   return (
     <div className="absolute content-stretch flex flex-col gap-[28px] items-center justify-center left-[112px] top-[40px] w-[1288px]">
-      <Frame6 />
-      <BackgroundBorderShadow />
+      <Frame6 title={content.texts[0]} description={content.texts[1]} />
+      <BackgroundBorderShadow content={content} />
     </div>
   );
 }
@@ -591,13 +594,13 @@ function Frame13() {
   );
 }
 
-function Container() {
+function Container({ text }: { text: string }) {
   return (
     <div className="bg-neutral-50 relative rounded-[100px] shrink-0 w-full" data-name="Container">
       <div aria-hidden="true" className="absolute border border-solid border-white inset-0 pointer-events-none rounded-[100px] shadow-[0px_2px_3px_0px_rgba(183,183,183,0.25)]" />
       <div className="flex flex-row items-center size-full">
         <div className="box-border content-stretch flex gap-[11px] items-center px-[11px] py-[6px] relative w-full">
-          <p className="font-['Inter:Medium',sans-serif] font-medium leading-[1.5] not-italic relative shrink-0 text-[#1a1a1a] text-[14px] text-nowrap whitespace-pre">{`Slide 1 of 5 `}</p>
+          <p className="font-['Inter:Medium',sans-serif] font-medium leading-[1.5] not-italic relative shrink-0 text-[#1a1a1a] text-[14px] text-nowrap whitespace-pre">{text}</p>
           <Frame13 />
         </div>
       </div>
@@ -605,22 +608,22 @@ function Container() {
   );
 }
 
-function Frame5() {
+function Frame5({ text }: { text: string }) {
   return (
     <div className="absolute bg-[rgba(255,255,255,0.5)] left-[calc(41.67%+32px)] rounded-[33px] top-[756px] w-[168px]">
       <div className="box-border content-stretch flex flex-col gap-[10px] items-center justify-center overflow-clip p-[6px] relative rounded-[inherit] w-[168px]">
-        <Container />
+        <Container text={text} />
       </div>
       <div aria-hidden="true" className="absolute border border-[rgba(221,223,225,0.6)] border-solid inset-0 pointer-events-none rounded-[33px]" />
     </div>
   );
 }
 
-export default function TrainingIntro1() {
+export default function TrainingIntro1({ content }: Props) {
   return (
     <div className="bg-[#eff2f4] relative size-full" data-name="Training Intro">
-      <Frame7 />
-      <Frame5 />
+      <Frame7 content={content} />
+      <Frame5 text={content.texts[9]} />
     </div>
   );
 }

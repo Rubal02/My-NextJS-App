@@ -334,7 +334,7 @@ function Frame3() {
 
 export default function TrainingIntro() {
   return (
-    <div className="bg-[#eff2f4] relative size-full" data-name="Training Intro">
+    <div className="bg-[#eff2f4] relative size-full min-h-screen" data-name="Training Intro">
       <Frame5 />
       <Frame3 />
     </div>

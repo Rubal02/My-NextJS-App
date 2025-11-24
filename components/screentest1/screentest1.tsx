@@ -1,5 +1,5 @@
 import svgPaths from "@/lib/svg/screentest1";
-
+import Link from "next/link";
 function Frame() {
   return (
     <div className="content-stretch flex items-center relative shrink-0 w-[1515px]">
@@ -1177,6 +1177,7 @@ function Frame14() {
 
 function Button1() {
   return (
+    <Link href="@/screentest2">
     <div className="h-[60px] relative rounded-[46px] shrink-0" data-name="Button" style={{ backgroundImage: "url('data:image/svg+xml;utf8,<svg viewBox=\\\'0 0 169 60\\\' xmlns=\\\'http://www.w3.org/2000/svg\\\' preserveAspectRatio=\\\'none\\\'><rect x=\\\'0\\\' y=\\\'0\\\' height=\\\'100%\\\' width=\\\'100%\\\' fill=\\\'url(%23grad)\\\' opacity=\\\'1\\\'/><defs><radialGradient id=\\\'grad\\\' gradientUnits=\\\'userSpaceOnUse\\\' cx=\\\'0\\\' cy=\\\'0\\\' r=\\\'10\\\' gradientTransform=\\\'matrix(0.0000011768 8.5714 -23.936 -4.5424 84.5 -22.5)\\\'><stop stop-color=\\\'rgba(0,95,88,1)\\\' offset=\\\'0\\\'/><stop stop-color=\\\'rgba(0,60,73,1)\\\' offset=\\\'1\\\'/></radialGradient></defs></svg>')" }}>
       <div className="box-border content-stretch flex gap-[8px] h-[60px] items-center justify-center overflow-clip px-[16px] py-[14px] relative rounded-[inherit]">
         <p className="font-['Outfit:Regular',sans-serif] font-normal leading-[1.5] relative shrink-0 text-[16px] text-nowrap text-white whitespace-pre">Submit Order</p>
@@ -1185,6 +1186,7 @@ function Button1() {
       <div className="absolute inset-[-1px] pointer-events-none shadow-[0px_0px_8px_1px_inset_rgba(20,20,20,0.5)]" />
       <div aria-hidden="true" className="absolute border border-[#0e3a3e] border-solid inset-[-1px] pointer-events-none rounded-[47px]" />
     </div>
+    </Link>
   );
 }
 

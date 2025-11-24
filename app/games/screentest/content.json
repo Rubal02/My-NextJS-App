@@ -1,0 +1,12 @@
+[
+    {
+        "id": "screen1",
+        "layout": "dashboard",
+        "title": "Dashboard"
+    },
+    {
+        "id": "screen2",
+        "layout": "confirmation",
+        "title": "Order Confirmation"
+    }
+]
