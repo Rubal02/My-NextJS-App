@@ -1,12 +1,93 @@
 [
-    {
-        "id": "screen1",
-        "layout": "dashboard",
-        "title": "Dashboard"
+  {
+    "id": "screen1",
+    "layout": "dashboard",
+    "title": "Dashboard",
+    "header": {
+      "title": "Beer Game",
+      "role": "Wholeseller",
+      "round": "Round 3/15"
     },
-    {
-        "id": "screen2",
-        "layout": "confirmation",
-        "title": "Order Confirmation"
+    "stats": [
+      {
+        "id": "inventory",
+        "title": "Current Inventory",
+        "value": "45",
+        "subtext": "Cost: Rs 45,000",
+        "icon": "box"
+      },
+      {
+        "id": "backlog",
+        "title": "Back logs",
+        "value": "8 units",
+        "subtext": "Cost: Rs 8,000",
+        "icon": "info"
+      },
+      {
+        "id": "incoming",
+        "title": "Incoming Orders",
+        "value": "25",
+        "unit": "units",
+        "icon": "info"
+      },
+      {
+        "id": "totalCost",
+        "title": "Current Total Cost",
+        "value": "Rs 5,040",
+        "icon": "tag"
+      }
+    ],
+    "chart": {
+      "title": "Graphical View",
+      "yAxis": ["Stock", "Cost"],
+      "xAxis": "Rounds"
+    },
+    "decision": {
+      "title": "Make Decisions as Wholeseller",
+      "inputValue": 20,
+      "buttonText": "Enter Game",
+      "infoText": "Once submitted, you cannot change your decision for this round.",
+      "tabs": [
+        "Order Flow",
+        "Round History"
+      ],
+      "orderFlow": [
+        {
+          "title": "Customer Demand",
+          "value": "8 units",
+          "time": "8:25:49 AM"
+        },
+        {
+          "title": "Order Received",
+          "value": "8 units",
+          "time": "8:25:59 AM"
+        },
+        {
+          "title": "Order Received",
+          "value": "8 units",
+          "time": "8:25:59 AM"
+        },
+        {
+          "title": "Transport Transit",
+          "value": "10 units",
+          "time": "8:26:09 AM",
+          "badge": "1 week"
+        }
+      ]
+    },
+    "supplyChain": {
+      "title": "Supply Chain Overview",
+      "stages": [
+        "Factory",
+        "Distributor",
+        "Wholesaler",
+        "Retailer"
+      ]
     }
+  },
+  {
+    "id": "screen2",
+    "layout": "confirmation",
+    "title": "Order Confirmation"
+  }
 ]

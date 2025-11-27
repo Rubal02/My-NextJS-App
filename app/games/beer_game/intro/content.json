@@ -4,7 +4,7 @@
         "layout": "instructions",
         "slideInfo": "Slide 1 of 5",
         "common": {
-            "title": "Game Instructions",
+            "title": "Game Instructions Beer game intro.",
             "description": "Experience the complexities of supply chain management in this interactive simulation."
         },
         "specific": {
@@ -141,7 +141,9 @@
             "description": "The Beer Simulation Game places participants in the role of managers operating within a dynamic, multi-tier supply chain. By taking on one of the four industrial partners in a beer distribution network—Retailer, Wholesaler, Distributor, or Manufacturer—participants experience the realities of managing inventory, responding to demand, and making strategic decisions under uncertainty.",
             "buttonText": "Next"
         },
-        "images": [],
+        "images": [
+            "/intro3_beergame.png"
+        ],
         "svg_paths": [
             "p31f42cf0",
             "p2c77300",
