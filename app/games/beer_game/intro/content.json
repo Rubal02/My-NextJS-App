@@ -1,5 +1,35 @@
 [
     {
+        "id": "lobby",
+        "layout": "lobby",
+        "slideInfo": "",
+        "common": {
+            "title": "",
+            "description": ""
+        },
+        "specific": {
+            "title": "Welcome Students",
+            "description": "We will teach you educational content through interactive games and simulation. We are Cyan Innovations",
+            "buttonText": "Enter Game",
+            "inputs": [
+                {
+                    "label": "Enter your name",
+                    "value": ""
+                },
+                {
+                    "label": "Enter your Lobby Code",
+                    "value": "54P0UI"
+                }
+            ],
+            "select": {
+                "label": "Select your Role",
+                "value": "Whole seller"
+            }
+        },
+        "images": [],
+        "svg_paths": []
+    },
+    {
         "id": "instructions",
         "layout": "instructions",
         "slideInfo": "Slide 1 of 5",

@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import svgPaths from "@/lib/svg/svg2";
 import svgPaths1 from "@/lib/svg/svg1";
 import content from "./content.json";
 
+import { useRouter } from "next/navigation";
+
 // --- Types ---
 
 interface IntroStep {
     id: string;
-    layout: "diagram" | "roles" | "objective" | "instructions";
+    layout: "diagram" | "roles" | "objective" | "instructions" | "lobby";
     slideInfo: string;
     common: {
         title: string;
@@ -23,6 +25,8 @@ interface IntroStep {
         roles?: { name: string; imageIndex: number }[];
         rolesList?: { role: string; description: string }[];
         buttonText: string;
+        inputs?: { label: string; value: string }[];
+        select?: { label: string; value: string };
     };
     images: string[];
     svg_paths: string[];
@@ -125,14 +129,14 @@ function GameTitle() {
     );
 }
 
-function RoleBadge() {
+function RoleBadge({ role = "Wholesaler" }: { role?: string }) {
     return (
         <div className="content-stretch flex gap-[8px] items-center relative shrink-0">
             <p className="font-['Inter:Regular',sans-serif] font-normal h-[19px] leading-[normal] not-italic relative shrink-0 text-[#202326] text-[14px] w-[33px]">Role:</p>
             <div className="content-stretch flex gap-[12px] items-center relative shrink-0">
                 <div className="bg-neutral-50 box-border content-stretch flex gap-[10px] items-center justify-center px-[14px] py-[8px] relative rounded-[99px] shadow-[0px_0px_0px_1px_#e1e4eb,0px_3px_8px_-1px_rgba(0,0,0,0.06)] shrink-0">
                     <div className="flex flex-col font-['Inter:Semi_Bold',sans-serif] font-semibold justify-center leading-[0] not-italic relative shrink-0 text-[#0f172b] text-[12px] text-nowrap">
-                        <p className="leading-[16px] whitespace-pre">Wholesaler</p>
+                        <p className="leading-[16px] whitespace-pre">{role}</p>
                     </div>
                     <div className="overflow-clip relative shrink-0 size-[16px]">
                         <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 15">
@@ -166,11 +170,196 @@ function RoleBadge() {
     );
 }
 
-function GameHeader() {
+function GameHeader({ role }: { role?: string }) {
     return (
         <div className="absolute content-stretch flex h-[40px] items-center justify-between left-1/2 top-[55px] translate-x-[-50%] w-[1128px] z-10">
             <GameTitle />
-            <RoleBadge />
+            <RoleBadge role={role} />
+        </div>
+    );
+}
+
+// --- Layout: Lobby ---
+
+function LobbyButton({ text, onClick }: { text: string; onClick: () => void }) {
+    return (
+        <button
+            onClick={onClick}
+            className="bg-[#0e3a3e] border border-[#0e3a3e] flex gap-[8px] items-center justify-center px-[24px] py-[12px] rounded-[46px] w-[175px] h-[56px] hover:bg-[#0b2d30] transition-colors"
+        >
+            <span className="font-['Outfit:Regular',sans-serif] font-normal leading-[1.5] text-[16px] text-white">
+                {text}
+            </span>
+            <div className="bg-[rgba(255,255,255,0.2)] flex items-center justify-center rounded-full w-[32px] h-[32px]">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M4.16666 10H15.8333" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M10 4.16669L15.8333 10L10 15.8334" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+            </div>
+        </button>
+    );
+}
+
+function LayoutLobby({ 
+    step, 
+    onNext,
+    playerName,
+    setPlayerName,
+    playerRole,
+    setPlayerRole
+}: { 
+    step: IntroStep; 
+    onNext: () => void;
+    playerName: string;
+    setPlayerName: (name: string) => void;
+    playerRole: string;
+    setPlayerRole: (role: string) => void;
+}) {
+    const inputs = step.specific.inputs || [];
+    const select = step.specific.select;
+
+    // Assets from public folder
+    const imgPaper = "/games/beer_game/intro/lobby/paper.png";
+    const imgGroup = "/games/beer_game/intro/lobby/group.png";
+    const imgArrow1_1 = "/games/beer_game/intro/lobby/arrow1_1.png";
+    const imgArrow1_2 = "/games/beer_game/intro/lobby/arrow1_2.png";
+    const imgArrow2_1 = "/games/beer_game/intro/lobby/arrow2_1.png";
+    const imgArrow2_2 = "/games/beer_game/intro/lobby/arrow2_2.png";
+    const imgShape = "/games/beer_game/intro/lobby/shape.png";
+
+    return (
+        <div className="absolute content-stretch flex flex-col gap-[28px] items-center justify-center left-[112px] top-[40px] w-[1288px]">
+            <div className="bg-[rgba(255,255,255,0.6)] h-[585px] relative rounded-[16px] shrink-0 w-full">
+                <div className="h-[585px] overflow-clip relative rounded-[inherit] w-full flex items-center">
+                    {/* Left Content */}
+                    <div className="absolute content-stretch flex gap-[105px] items-center left-[80px] z-10">
+                        <div className="flex flex-col gap-[28px] items-start w-[514px]">
+                            <div className="flex flex-col gap-[8px]">
+                                <h1 className="font-['Outfit:SemiBold',sans-serif] font-semibold text-[40px] text-[#202326] tracking-[-0.4px]">
+                                    {step.specific.title}
+                                </h1>
+                                <p className="font-['Inter:Regular',sans-serif] font-normal text-[16px] text-[#202326]">
+                                    {step.specific.description}
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col gap-[16px] w-full">
+                                {inputs.map((input, idx) => (
+                                    <div key={idx} className="flex flex-col gap-[12px] w-full">
+                                        <label className="font-['Outfit:Regular',sans-serif] text-[18px] text-[#202326]">
+                                            {input.label}
+                                        </label>
+                                        <div className={`bg-[rgba(255,255,255,0.6)] border ${idx === 1 ? 'border-[#2ac2e4]' : 'border-[#c4c4c4]'} flex items-center px-[24px] py-[15px] rounded-[99px] w-full h-[60px]`}>
+                                            {input.label.toLowerCase().includes("name") ? (
+                                                <input
+                                                    type="text"
+                                                    value={playerName || input.value} // Use state or fallback
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        // Allow only text (letters and spaces)
+                                                        if (/^[a-zA-Z\s]*$/.test(val)) {
+                                                            setPlayerName(val);
+                                                        }
+                                                    }}
+                                                    className="bg-transparent border-none outline-none font-['Outfit:SemiBold',sans-serif] font-semibold text-[18px] text-[#020618] w-full placeholder-gray-500"
+                                                    placeholder="Enter your name"
+                                                />
+                                            ) : (
+                                                <span className="font-['Outfit:SemiBold',sans-serif] font-semibold text-[18px] text-[#020618]">
+                                                    {input.value}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                ))}
+
+                                {select && (
+                                    <div className="flex flex-col gap-[12px] w-full">
+                                        <label className="font-['Outfit:Regular',sans-serif] text-[18px] text-[#202326]">
+                                            {select.label}
+                                        </label>
+                                        <div className="relative bg-[rgba(255,255,255,0.6)] border border-[#c4c4c4] flex items-center justify-between rounded-[99px] w-full h-[60px]">
+                                            <select
+                                                value={playerRole}
+                                                onChange={(e) => setPlayerRole(e.target.value)}
+                                                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10"
+                                            >
+                                                <option value="Retailer">Retailer</option>
+                                                <option value="Wholesaler">Wholesaler</option>
+                                                <option value="Distributor">Distributor</option>
+                                                <option value="Factory">Factory</option>
+                                            </select>
+                                            <div className="flex items-center justify-between w-full px-[24px]">
+                                                <span className="font-['Outfit:SemiBold',sans-serif] font-semibold text-[18px] text-[#020618]">
+                                                    {playerRole}
+                                                </span>
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                                    <path d="M6 9L12 15L18 9" stroke="#202326" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mt-4">
+                                <LobbyButton text={step.specific.buttonText} onClick={onNext} />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Right Image/Content - Reconstructed from Figma */}
+                    <div className="absolute right-0 top-0 bottom-0 w-[50%] h-full overflow-hidden rounded-r-[16px]">
+                         <div className="bg-[#7c7b82] border-l-2 border-[#d2d2d2] border-solid overflow-clip relative size-full">
+                            <div className="absolute h-[1414px] left-[-100px] top-[-45px] w-[2048px]">
+                                <img alt="" className="absolute inset-0 max-w-none object-50%-50% object-cover pointer-events-none size-full" src={imgPaper} />
+                            </div>
+                            <p className="absolute font-['Nanum_Pen_Script',cursive] leading-[normal] left-[10%] not-italic text-[#29595e] text-[60px] top-[30%] tracking-[-1.2px]">
+                                Cyan Technology
+                            </p>
+                            <div className="absolute contents">
+                                <p className="absolute font-['Nanum_Pen_Script',cursive] leading-[normal] right-[15%] not-italic opacity-60 text-[#7c7b82] text-[32px] bottom-[10%] tracking-[-0.64px]">
+                                    education
+                                </p>
+                                <p className="absolute font-['Nanum_Pen_Script',cursive] leading-[normal] right-[20%] not-italic opacity-60 text-[#7c7b82] text-[32px] top-[20%] tracking-[-0.64px]">
+                                    interactive
+                                </p>
+                                <p className="absolute font-['Nanum_Pen_Script',cursive] leading-[normal] left-[15%] not-italic opacity-60 text-[#7c7b82] text-[32px] top-[25%] tracking-[-0.64px]">
+                                    business
+                                </p>
+                                {/* Group Image */}
+                                <div className="absolute left-[35%] top-[35%] w-[38px] h-[112px] rotate-[35deg] skew-x-[12deg] opacity-60">
+                                    <img alt="" className="block max-w-none size-full" src={imgGroup} />
+                                </div>
+                                <p className="absolute font-['Nanum_Pen_Script',cursive] leading-[normal] left-[15%] not-italic opacity-60 text-[#7c7b82] text-[32px] bottom-[10%] tracking-[-0.64px]">
+                                    games
+                                </p>
+                                {/* Arrow 1 */}
+                                <div className="absolute right-[20%] top-[50%] w-[125px] h-[126px] scale-y-[-1]">
+                                    <div className="relative size-full opacity-60">
+                                         <div className="absolute inset-0">
+                                            <img alt="" className="absolute inset-0 w-full h-full object-contain" src={imgArrow1_1} />
+                                            <img alt="" className="absolute inset-0 w-full h-full object-contain" src={imgArrow1_2} />
+                                         </div>
+                                    </div>
+                                </div>
+                                {/* Arrow 2 */}
+                                <div className="absolute left-[20%] top-[40%] w-[117px] h-[117px] rotate-[188deg] opacity-60">
+                                    <div className="relative size-full">
+                                        <img alt="" className="absolute inset-0 w-full h-full object-contain" src={imgArrow2_1} />
+                                        <img alt="" className="absolute inset-0 w-full h-full object-contain" src={imgArrow2_2} />
+                                    </div>
+                                </div>
+                                {/* Shape */}
+                                <div className="absolute right-[30%] top-[30%] w-[79px] h-[80px] rotate-[149deg] skew-x-[357deg] opacity-[0.19]">
+                                    <img alt="" className="block max-w-none size-full" src={imgShape} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div aria-hidden="true" className="absolute border-[1.416px] border-solid border-white inset-0 pointer-events-none rounded-[16px] shadow-[0px_2.509px_10.035px_0px_rgba(255,255,255,0)]" />
+            </div>
         </div>
     );
 }
@@ -308,21 +497,23 @@ function LayoutObjective({ step, onNext }: { step: IntroStep; onNext: () => void
 
 // --- Layout: Instructions (From TrainingIntro) ---
 
-function LayoutInstructions({ step, onNext }: { step: IntroStep; onNext: () => void }) {
+function LayoutInstructions({ step, onNext, role }: { step: IntroStep; onNext: () => void; role?: string }) {
+    const description = step.specific.description.replace("Wholesaler", role || "Wholesaler");
+    
     return (
         <div className="absolute content-stretch flex flex-col gap-[28px] items-center justify-center left-[112px] top-[40px] w-[1288px]">
             <CommonHeader title={step.common.title} description={step.common.description} />
 
             <div className="bg-[rgba(255,255,255,0.6)] h-[585px] relative rounded-[16px] shrink-0 w-full">
                 <div className="h-[585px] overflow-clip relative rounded-[inherit] w-full">
-                    <GameHeader />
+                    <GameHeader role={role} />
                     <div className="absolute content-stretch flex gap-[105px] items-center left-[80px] top-[135px]">
                         <div className="content-stretch flex gap-[74px] items-start relative shrink-0">
                             <div className="content-stretch flex flex-col gap-[40px] items-start justify-center relative shrink-0 w-[589px]">
                                 <div className="content-stretch flex flex-col gap-[16px] items-start justify-center relative shrink-0 text-[#202326] w-full">
                                     <p className="font-['Outfit:SemiBold',sans-serif] font-semibold leading-[normal] relative shrink-0 text-[40px] text-nowrap tracking-[-0.4px] whitespace-pre">{step.specific.title}</p>
                                     <p className="font-['Inter:Regular',sans-serif] font-normal leading-[normal] not-italic relative shrink-0 text-[16px] w-[566px]">
-                                        {step.specific.description}
+                                        {description}
                                     </p>
                                 </div>
                                 <div className="content-stretch flex flex-col gap-[20px] items-start justify-center relative shrink-0 w-[428px]">
@@ -336,7 +527,7 @@ function LayoutInstructions({ step, onNext }: { step: IntroStep; onNext: () => v
                                             </svg>
                                         </div>
                                         <div className="flex flex-col font-['Outfit:Regular',sans-serif] font-normal justify-center leading-[0] relative shrink-0 text-[#0f172b] text-[24px] text-nowrap tracking-[-0.288px]">
-                                            <p className="leading-[normal] whitespace-pre">Wholesaler</p>
+                                            <p className="leading-[normal] whitespace-pre">{role || "Wholesaler"}</p>
                                         </div>
                                     </div>
                                     {/* List Items */}
@@ -372,17 +563,36 @@ function LayoutInstructions({ step, onNext }: { step: IntroStep; onNext: () => v
 // --- Main Component ---
 
 export default function BeerGamePage() {
+    const router = useRouter();
     const [currentStepIndex, setCurrentStepIndex] = useState(0);
+    const [playerName, setPlayerName] = useState("");
+    const [playerRole, setPlayerRole] = useState("Wholesaler");
+
     const introContent = content as IntroStep[];
     const currentStep = introContent[currentStepIndex];
+
+    useEffect(() => {
+        // Initialize from localStorage if available
+        const storedName = localStorage.getItem("beerGame_playerName");
+        const storedRole = localStorage.getItem("beerGame_playerRole");
+        if (storedName) setPlayerName(storedName);
+        if (storedRole) setPlayerRole(storedRole);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem("beerGame_playerName", playerName);
+    }, [playerName]);
+
+    useEffect(() => {
+        localStorage.setItem("beerGame_playerRole", playerRole);
+    }, [playerRole]);
 
     const handleNext = () => {
         if (currentStepIndex < introContent.length - 1) {
             setCurrentStepIndex(currentStepIndex + 1);
         } else {
-            // Handle end of intro - maybe redirect or loop?
-            // For now, just log or stay on last step
-            console.log("Intro completed");
+            // Navigate to screentest page when intro is complete
+            router.push("/games/beer_game/screentest");
         }
     };
 
@@ -390,7 +600,17 @@ export default function BeerGamePage() {
 
     return (
         <div className="bg-[#eff2f4] relative size-full min-h-screen" data-name="Training Intro">
-            {currentStep.layout === "instructions" && <LayoutInstructions step={currentStep} onNext={handleNext} />}
+            {currentStep.layout === "lobby" && (
+                <LayoutLobby 
+                    step={currentStep} 
+                    onNext={handleNext}
+                    playerName={playerName}
+                    setPlayerName={setPlayerName}
+                    playerRole={playerRole}
+                    setPlayerRole={setPlayerRole}
+                />
+            )}
+            {currentStep.layout === "instructions" && <LayoutInstructions step={currentStep} onNext={handleNext} role={playerRole} />}
             {currentStep.layout === "diagram" && <LayoutDiagram step={currentStep} onNext={handleNext} />}
             {currentStep.layout === "roles" && <LayoutRoles step={currentStep} onNext={handleNext} />}
             {currentStep.layout === "objective" && <LayoutObjective step={currentStep} onNext={handleNext} />}

@@ -6,35 +6,44 @@
     "header": {
       "title": "Beer Game",
       "role": "Wholeseller",
-      "round": "Round 3/15"
+      "round": "Round 1/15"
+    },
+    "images": {
+        "background": "/path/to/background.png",
+        "roleIcon": "/path/to/role-icon.png",
+        "storeIcon": "/path/to/store-icon.png"
     },
     "stats": [
       {
         "id": "inventory",
         "title": "Current Inventory",
-        "value": "45",
-        "subtext": "Cost: Rs 45,000",
-        "icon": "box"
+        "value": "400 ",
+        "subtext": "Cost: ",
+        "icon": "box",
+        "image": "/path/to/inventory-icon.png"
       },
       {
         "id": "backlog",
         "title": "Back logs",
-        "value": "8 units",
+        "value": "10 units",
         "subtext": "Cost: Rs 8,000",
-        "icon": "info"
+        "icon": "info",
+        "image": "/path/to/backlog-icon.png"
       },
       {
         "id": "incoming",
         "title": "Incoming Orders",
         "value": "25",
         "unit": "units",
-        "icon": "info"
+        "icon": "info",
+        "image": "/path/to/incoming-icon.png"
       },
       {
         "id": "totalCost",
         "title": "Current Total Cost",
         "value": "Rs 5,040",
-        "icon": "tag"
+        "icon": "tag",
+        "image": "/path/to/cost-icon.png"
       }
     ],
     "chart": {
@@ -44,7 +53,7 @@
     },
     "decision": {
       "title": "Make Decisions as Wholeseller",
-      "inputValue": 20,
+      "inputValue": "0",
       "buttonText": "Enter Game",
       "infoText": "Once submitted, you cannot change your decision for this round.",
       "tabs": [
@@ -73,21 +82,316 @@
           "time": "8:26:09 AM",
           "badge": "1 week"
         }
+      ],
+      "roundHistory": [
+        {
+          "round": "1",
+          "inventory": "20",
+          "incoming": "30",
+          "outgoing": "40",
+          "backorders": "50",
+          "totalCost": "Rs 200"
+        },
+        {
+          "round": "2",
+          "inventory": "21",
+          "incoming": "31",
+          "outgoing": "41",
+          "backorders": "51",
+          "totalCost": "Rs 210"
+        },
+        {
+          "round": "3",
+          "inventory": "22",
+          "incoming": "32",
+          "outgoing": "42",
+          "backorders": "52",
+          "totalCost": "Rs 220"
+        },
+        {
+          "round": "4",
+          "inventory": "23",
+          "incoming": "33",
+          "outgoing": "43",
+          "backorders": "53",
+          "totalCost": "Rs 230"
+        },
+        {
+          "round": "5",
+          "inventory": "24",
+          "incoming": "34",
+          "outgoing": "44",
+          "backorders": "54",
+          "totalCost": "Rs 240"
+        },
+        {
+          "round": "6",
+          "inventory": "25",
+          "incoming": "35",
+          "outgoing": "45",
+          "backorders": "55",
+          "totalCost": "Rs 250"
+        },
+        {
+          "round": "7",
+          "inventory": "26",
+          "incoming": "36",
+          "outgoing": "46",
+          "backorders": "56",
+          "totalCost": "Rs 260"
+        }
       ]
     },
     "supplyChain": {
       "title": "Supply Chain Overview",
       "stages": [
-        "Factory",
-        "Distributor",
-        "Wholesaler",
-        "Retailer"
+        {
+          "name": "Factory"
+        },
+        {
+          "name": "Distributor"
+        },
+        {
+          "name": "Wholesaler"
+        },
+        {
+          "name": "Retailer"
+        }
       ]
     }
   },
   {
     "id": "screen2",
     "layout": "confirmation",
-    "title": "Order Confirmation"
+    "title": "Order Submitted",
+    "header": {
+      "title": "Order Submitted",
+      "role": "Wholeseller",
+      "round": "Round 1/15"
+    },
+    "images": {
+        "roleIcon": "/path/to/role-icon.png",
+        "storeIcon": "/path/to/store-icon.png",
+        "truckIcon": "/path/to/truck-icon.png"
+    },  
+    "successMessage": {
+        "title": "You have Successfully ordered",
+        "amount": "20 units",
+        "subtext": "Now 20 units will reach you in 2 weeks preplan accordingly for next order"
+    },
+    "stats": [
+        {
+            "title": "Order Sent",
+            "value": "20",
+            "icon": "truck",
+            "image": "/path/to/order-sent-icon.png"
+        },
+        {
+            "title": "Incoming Orders",
+            "value": "28",
+            "icon": "package",
+            "image": "/path/to/incoming-orders-icon.png"
+        },
+        {
+            "title": "Current Backlog",
+            "value": "8",
+            "icon": "clock",
+            "image": "/path/to/backlog-icon.png"
+        }
+    ],
+    "transit": {
+        "amount": "20 units",
+        "duration": "2 weeks",
+        "source": "Distributor",
+        "destination": "Wholesaler"
+    },
+    "waiting": {
+        "text": "We are waiting for other players to submit their reqeuest",
+        "buttonText": "Next Round"
+    }
+  },
+  {
+    "id": "screen3",
+    "layout": "summary",
+    "title": "Round Summary",
+    "header": {
+      "title": "Round Summary",
+      "role": "Wholeseller",
+      "round": "Round 3/15"
+    },
+    "stats": [
+        {
+            "title": "Order Sent",
+            "value": "20",
+            "icon": "package"
+        },
+        {
+            "title": "Incoming Orders",
+            "value": "28",
+            "icon": "box"
+        },
+        {
+            "title": "Current Backlog",
+            "value": "8",
+            "icon": "truck"
+        }
+    ],
+    "waiting": {
+        "text": "These are your current summary for the new round.",
+        "buttonText": "Next Round"
+    }
+  },
+  {
+    "id": "screen4",
+    "layout": "results",
+    "title": "Results",
+    "header": {
+      "title": "Beer Game",
+      "role": "Wholeseller",
+      "round": "Round 15/15"
+    },
+    "teamPerformance": {
+      "title": "Team Performance",
+      "stats": [
+        {
+          "title": "Total Costs",
+          "value": "Rs 32,565",
+          "icon": "tag"
+        },
+        {
+          "title": "Final On-time Sales",
+          "value": "30%",
+          "subtext": "28/96",
+          "icon": "checkCircle"
+        },
+        {
+          "title": "Average Stock",
+          "value": "39 units",
+          "icon": "box"
+        },
+        {
+          "title": "Backorders duration",
+          "value": "10/12 weeks",
+          "icon": "clock"
+        }
+      ]
+    },
+    "individualPerformance": {
+      "title": "Individual Performance",
+      "tableHeaders": ["Metric", "Retailer", "Wholesaler", "Distributor", "Manufacturer"],
+      "tableRows": [
+        {
+          "metric": "Average Order Quantity",
+          "retailer": "104",
+          "wholesaler": "122",
+          "distributor": "148",
+          "manufacturer": "185"
+        },
+        {
+          "metric": "Average Stock",
+          "retailer": "41",
+          "wholesaler": "48",
+          "distributor": "63",
+          "manufacturer": "77"
+        },
+        {
+          "metric": "Average Backorder",
+          "retailer": "3",
+          "wholesaler": "5",
+          "distributor": "8",
+          "manufacturer": "12"
+        },
+        {
+          "metric": "Total Cost",
+          "retailer": "Rs 8,420",
+          "wholesaler": "Rs 10,550",
+          "distributor": "Rs 11,890",
+          "manufacturer": "Rs 14,280"
+        },
+        {
+          "metric": "% Shipped On Time",
+          "retailer": "85%",
+          "wholesaler": "72%",
+          "distributor": "68%",
+          "manufacturer": "58%"
+        }
+      ]
+    },
+    "bullwhipEffect": {
+      "title": "The Bullwhip Effect",
+      "chartTitle1": "Orders vs. Final Demand",
+      "chartSubtitle1": "This chart shows how order quantities amplify as we move up the supply chain, away from the final consumer.",
+      "legend1": ["Orders", "Final Demand"],
+      "chartTitle2": "Stock vs. Final Demand",
+      "chartSubtitle2": "This chart illustrates inventory level fluctuation across the supply chain in response to demand.",
+      "legend2": ["Stock", "Final Demand"]
+    },
+    "experienceSummary": {
+      "title": "Experience Summary",
+      "description": "The journey to a perfect supply chain doesn't end with understanding the Bullwhip Effect; it begins with it. By recognizing its causes and implementing strategic solutions, businesses can transform their supply chains into resilient, efficient, and customer-centric networks.",
+      "sections": [
+        {
+          "heading": "1. Bullwhip Effect: What Really Matters?",
+          "subsections": [
+            {
+              "title": "Lagging Information",
+              "description": "Every time an order passes from one stage to the next, there's a delay. This delay means decisions are based on outdated information, leading to over-ordering or under-ordering."
+            },
+            {
+              "title": "Order Batching",
+              "description": "Ordering in large, infrequent batches (due to minimum order quantities or to save on shipping costs) creates spikes and troughs in demand signals further up the chain."
+            },
+            {
+              "title": "Disrupted Communication",
+              "description": "The game's limited communication simulates a real-world scenario where lack of transparency between supply chain partners leads to each entity making decisions in isolation, often based on assumptions rather than real-time data."
+            }
+          ]
+        },
+        {
+          "heading": "2. Improving Supply Chain Health",
+          "subsections": [
+            {
+              "title": "Collaborative Planning",
+              "description": "Break down the silos between each stage using collaborative planning, forecasting, and replenishment (CPFR) strategies. Share demand forecasts and inventory levels across the supply chain to ensure everyone is working with the same, up-to-date information."
+            },
+            {
+              "title": "Predictive Analytics",
+              "description": "Use machine learning algorithms to analyze historical data and predict future demand more accurately. This reduces reliance on guesswork and minimizes the impact of demand variability."
+            },
+            {
+              "title": "Real-Time Visibility",
+              "description": "Cloud-Based ERPs ensure everyone sees the same numbers, fostering trust and enabling quicker, more informed decisions. This transparency helps in identifying and mitigating potential disruptions before they escalate."
+            }
+          ]
+        }
+      ]
+    },
+    "exportActions": {
+      "title": "Export & Actions",
+      "buttons": [
+        {
+          "text": "Download PDF",
+          "subtext": "Complete report",
+          "icon": "download"
+        },
+        {
+          "text": "Export Excel",
+          "subtext": "Raw data",
+          "icon": "mail"
+        },
+        {
+          "text": "Email Results",
+          "subtext": "Send to team",
+          "icon": "mail"
+        },
+        {
+          "text": "Share Link",
+          "subtext": "Copy URL",
+          "icon": "share"
+        }
+      ],
+      "backToLobbyButton": "Back to Lobby",
+      "playAgainButton": "Play Again"
+    }
   }
 ]

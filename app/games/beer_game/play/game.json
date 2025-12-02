@@ -1,0 +1,152 @@
+[
+  {
+    "id": "screen1",
+    "layout": "dashboard",
+    "title": "Dashboard",
+    "header": {
+      "title": "Beer Game",
+      "role": "Wholeseller",
+      "round": "Round 3/15"
+    },
+    "stats": [
+      {
+        "id": "inventory",
+        "title": "Current Inventory",
+        "value": "45",
+        "subtext": "Cost: Rs 45,000",
+        "icon": "box"
+      },
+      {
+        "id": "backlog",
+        "title": "Back logs",
+        "value": "8 units",
+        "subtext": "Cost: Rs 8,000",
+        "icon": "info"
+      },
+      {
+        "id": "incoming",
+        "title": "Incoming Orders",
+        "value": "25",
+        "unit": "units",
+        "icon": "info"
+      },
+      {
+        "id": "totalCost",
+        "title": "Current Total Cost",
+        "value": "Rs 5,040",
+        "icon": "tag"
+      }
+    ],
+    "chart": {
+      "title": "Graphical View",
+      "yAxis": ["Stock", "Cost"],
+      "xAxis": "Rounds"
+    },
+    "decision": {
+      "title": "Make Decisions as Wholeseller",
+      "inputValue": 20,
+      "buttonText": "Enter Game",
+      "infoText": "Once submitted, you cannot change your decision for this round.",
+      "tabs": [
+        "Order Flow",
+        "Round History"
+      ],
+      "orderFlow": [
+        {
+          "title": "Customer Demand",
+          "value": "8 units",
+          "time": "8:25:49 AM"
+        },
+        {
+          "title": "Order Received",
+          "value": "8 units",
+          "time": "8:25:59 AM"
+        },
+        {
+          "title": "Order Received",
+          "value": "8 units",
+          "time": "8:25:59 AM"
+        },
+        {
+          "title": "Transport Transit",
+          "value": "10 units",
+          "time": "8:26:09 AM",
+          "badge": "1 week"
+        }
+      ],
+      "roundHistory": [
+        {
+          "round": "1",
+          "inventory": "20",
+          "incoming": "30",
+          "outgoing": "40",
+          "backorders": "50",
+          "totalCost": "Rs 200"
+        },
+        {
+          "round": "2",
+          "inventory": "21",
+          "incoming": "31",
+          "outgoing": "41",
+          "backorders": "51",
+          "totalCost": "Rs 210"
+        },
+        {
+          "round": "3",
+          "inventory": "22",
+          "incoming": "32",
+          "outgoing": "42",
+          "backorders": "52",
+          "totalCost": "Rs 220"
+        },
+        {
+          "round": "4",
+          "inventory": "23",
+          "incoming": "33",
+          "outgoing": "43",
+          "backorders": "53",
+          "totalCost": "Rs 230"
+        },
+        {
+          "round": "5",
+          "inventory": "24",
+          "incoming": "34",
+          "outgoing": "44",
+          "backorders": "54",
+          "totalCost": "Rs 240"
+        },
+        {
+          "round": "6",
+          "inventory": "25",
+          "incoming": "35",
+          "outgoing": "45",
+          "backorders": "55",
+          "totalCost": "Rs 250"
+        },
+        {
+          "round": "7",
+          "inventory": "26",
+          "incoming": "36",
+          "outgoing": "46",
+          "backorders": "56",
+          "totalCost": "Rs 260"
+        }
+      ]
+    },
+    "supplyChain": {
+      "title": "Supply Chain Overview",
+      "stages": [
+        "Factory",
+        "Distributor",
+        "Wholesaler",
+        "Retailer"
+      ]
+    }
+  },
+  {
+    "id": "screen2",
+    "layout": "confirmation",
+    "title": "Order Confirmation"
+  }
+]
+
